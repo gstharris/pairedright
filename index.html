@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PairedRight — AI built into every table, every ticket, every shift</title>
+<meta name="description" content="PairedPOS is the AI-native restaurant operating system for independent operators. No hardware. No installer. $29/month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1A1814;--ink2:#4A4640;--ink3:#8A847C;
+  --bg:#FAFAF7;--surface:#FFFFFF;--surface2:#F5F2EC;
+  --border:rgba(26,24,20,0.09);--border2:rgba(26,24,20,0.16);
+  --forest:#1B4D3E;--forest-l:#E8F2EE;--forest-m:#4A7A68;
+  --amber:#C97B2F;--amber-l:#FDF3E7;
+  --red:#C0392B;--red-l:#FDECEA;
+  --gold:#B8860B;--gold-l:#F7F0DC;
+  --fn:'DM Sans',sans-serif;--fd:'Playfair Display',Georgia,serif;--mono:'DM Mono',monospace;
+  --r:10px;--rl:16px;--rxl:24px;--rf:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fn);background:var(--bg);color:var(--ink);overflow-x:hidden;}
+
+/* ═══ NAV ═══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-icon{width:32px;height:32px;border-radius:7px;background:var(--forest);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nav-wordmark{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.3px;}
+.nav-wordmark span{font-weight:300;color:var(--amber);}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-link{font-size:13px;color:var(--ink3);text-decoration:none;font-weight:500;transition:color .15s;}
+.nav-link:hover{color:var(--ink);}
+.nav-cta{background:var(--forest);color:white;border:none;border-radius:var(--rf);padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--fn);text-decoration:none;transition:opacity .15s;}
+.nav-cta:hover{opacity:.88;}
+@media(max-width:640px){.nav-links{display:none;}.nav-cta{padding:7px 14px;font-size:12px;}}
+
+/* ═══ HERO ═══ */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 24px 80px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(27,77,62,.07) 0%,transparent 65%);pointer-events:none;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--forest-l);border:1px solid rgba(27,77,62,.2);border-radius:var(--rf);padding:5px 14px;font-size:12px;font-weight:600;color:var(--forest);letter-spacing:.04em;text-transform:uppercase;margin-bottom:28px;}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--forest);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.hero-h1{font-family:var(--fd);font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;color:var(--ink);max-width:800px;margin-bottom:12px;}
+.hero-h1 em{font-style:italic;color:var(--forest);}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--ink3);max-width:520px;line-height:1.6;margin-bottom:40px;font-weight:400;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:56px;}
+.btn-primary{background:var(--forest);color:white;border:none;border-radius:var(--rf);padding:14px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--fn);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-primary:hover{background:#143d31;transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--ink);border:1.5px solid var(--border2);border-radius:var(--rf);padding:14px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--fn);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-secondary:hover{border-color:var(--forest);color:var(--forest);}
+.hero-proof{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;}
+.proof-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink3);}
+.proof-dot{width:4px;height:4px;border-radius:50%;background:var(--border2);}
+
+/* ═══ ROLE CARDS ═══ */
+.roles{padding:80px 24px;max-width:1100px;margin:0 auto;}
+.section-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--amber);margin-bottom:12px;}
+.section-title{font-family:var(--fd);font-size:clamp(28px,4vw,42px);font-weight:700;line-height:1.15;letter-spacing:-0.5px;color:var(--ink);margin-bottom:48px;max-width:560px;}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:768px){.role-grid{grid-template-columns:1fr;}}
+.role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:28px;position:relative;overflow:hidden;transition:all .2s;}
+.role-card:hover{border-color:var(--forest);transform:translateY(-2px);box-shadow:0 8px 32px rgba(27,77,62,.1);}
+.role-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.role-card.guest::before{background:var(--forest);}
+.role-card.server::before{background:var(--amber);}
+.role-card.manager::before{background:var(--ink);}
+.role-emoji{font-size:28px;margin-bottom:14px;display:block;}
+.role-who{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:6px;}
+.role-title{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.role-desc{font-size:14px;color:var(--ink3);line-height:1.6;}
+.role-features{margin-top:16px;display:flex;flex-direction:column;gap:6px;}
+.role-feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink2);}
+.role-feat::before{content:'→';color:var(--forest);font-size:12px;flex-shrink:0;margin-top:1px;}
+
+/* ═══ COST COMPARISON ═══ */
+.compare{background:var(--ink);padding:80px 24px;}
+.compare-inner{max-width:900px;margin:0 auto;}
+.compare-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:12px;}
+.compare-title{font-family:var(--fd);font-size:clamp(28px,4vw,42px);font-weight:700;color:white;margin-bottom:8px;letter-spacing:-0.5px;}
+.compare-sub{font-size:16px;color:rgba(255,255,255,.4);margin-bottom:48px;}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+@media(max-width:600px){.compare-grid{grid-template-columns:1fr;}}
+.compare-card{border-radius:var(--rl);padding:28px;}
+.compare-card.them{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);}
+.compare-card.us{background:rgba(27,77,62,.3);border:1px solid rgba(27,77,62,.5);}
+.compare-brand{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;}
+.compare-card.them .compare-brand{color:rgba(255,255,255,.3);}
+.compare-card.us .compare-brand{color:#7EBFA8;}
+.compare-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px;}
+.compare-row:last-child{border-bottom:none;}
+.compare-row .label{color:rgba(255,255,255,.5);}
+.compare-card.them .compare-row .val{color:rgba(255,255,255,.7);}
+.compare-card.us .compare-row .val{color:white;font-weight:600;}
+.compare-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);}
+.compare-total-label{font-size:13px;color:rgba(255,255,255,.4);}
+.compare-card.them .compare-total-val{font-size:26px;font-weight:700;font-family:var(--mono);color:rgba(255,255,255,.5);}
+.compare-card.us .compare-total-val{font-size:26px;font-weight:700;font-family:var(--mono);color:#7EBFA8;}
+.compare-savings{background:rgba(27,77,62,.4);border:1px solid rgba(27,77,62,.6);border-radius:var(--rl);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.savings-label{font-size:14px;color:rgba(255,255,255,.5);}
+.savings-val{font-family:var(--fd);font-size:32px;font-weight:700;color:#7EBFA8;}
+.savings-note{font-size:12px;color:rgba(255,255,255,.3);margin-top:2px;}
+
+/* ═══ HOW IT WORKS ═══ */
+.how{padding:80px 24px;max-width:1100px;margin:0 auto;}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px;}
+@media(max-width:768px){.steps{grid-template-columns:1fr;gap:24px;}}
+.step{position:relative;padding-left:48px;}
+.step-num{position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--forest-l);border:1.5px solid var(--forest-m);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--forest);}
+.step-title{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.step-desc{font-size:14px;color:var(--ink3);line-height:1.6;}
+.step-time{display:inline-block;margin-top:10px;font-size:11px;font-weight:600;color:var(--forest);background:var(--forest-l);border-radius:var(--rf);padding:3px 10px;}
+
+/* ═══ FEATURES GRID ═══ */
+.features{background:var(--surface2);padding:80px 24px;}
+.features-inner{max-width:1100px;margin:0 auto;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);}
+@media(max-width:768px){.feat-grid{grid-template-columns:1fr;}}
+.feat-item{background:var(--surface);padding:28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.feat-item:nth-child(3n){border-right:none;}
+.feat-item:nth-last-child(-n+3){border-bottom:none;}
+@media(max-width:768px){.feat-item{border-right:none;}.feat-item:last-child{border-bottom:none;}}
+.feat-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px;}
+.feat-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.feat-desc{font-size:13px;color:var(--ink3);line-height:1.5;}
+
+/* ═══ DEMO CTA ═══ */
+.demo-cta{padding:80px 24px;text-align:center;}
+.demo-cta-inner{max-width:640px;margin:0 auto;}
+.demo-box{background:var(--ink);border-radius:var(--rxl);padding:56px 48px;position:relative;overflow:hidden;}
+.demo-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(27,77,62,.3) 0%,transparent 60%);pointer-events:none;}
+.demo-box-title{font-family:var(--fd);font-size:clamp(24px,4vw,36px);font-weight:700;color:white;margin-bottom:12px;position:relative;}
+.demo-box-sub{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:32px;position:relative;}
+.demo-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-demo{background:var(--forest);color:white;border:none;border-radius:var(--rf);padding:13px 26px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--fn);text-decoration:none;transition:all .2s;}
+.btn-demo:hover{background:#143d31;}
+.btn-demo-outline{background:transparent;color:rgba(255,255,255,.7);border:1.5px solid rgba(255,255,255,.2);border-radius:var(--rf);padding:13px 26px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--fn);text-decoration:none;transition:all .2s;}
+.btn-demo-outline:hover{border-color:rgba(255,255,255,.5);color:white;}
+
+/* ═══ LEAD GEN FORM ═══ */
+.lead{padding:80px 24px;background:var(--surface2);}
+.lead-inner{max-width:560px;margin:0 auto;}
+.lead-title{font-family:var(--fd);font-size:clamp(28px,4vw,38px);font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-0.3px;}
+.lead-sub{font-size:15px;color:var(--ink3);margin-bottom:36px;line-height:1.5;}
+.form{display:flex;flex-direction:column;gap:14px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:520px){.form-row{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:12px;font-weight:600;color:var(--ink2);letter-spacing:.02em;}
+.field input,.field textarea,.field select{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--r);padding:11px 14px;font-size:14px;color:var(--ink);font-family:var(--fn);outline:none;transition:border-color .15s;width:100%;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--forest);}
+.field textarea{resize:vertical;min-height:80px;}
+.form-submit{background:var(--forest);color:white;border:none;border-radius:var(--rf);padding:14px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--fn);width:100%;transition:all .2s;margin-top:4px;}
+.form-submit:hover{background:#143d31;}
+.form-submit:disabled{opacity:.6;cursor:not-allowed;}
+.form-success{background:var(--forest-l);border:1px solid var(--forest-m);border-radius:var(--rl);padding:20px;text-align:center;display:none;}
+.form-success-icon{font-size:28px;margin-bottom:8px;}
+.form-success-title{font-size:15px;font-weight:700;color:var(--forest);margin-bottom:4px;}
+.form-success-sub{font-size:13px;color:var(--ink3);}
+
+/* ═══ FOOTER ═══ */
+footer{background:var(--ink);padding:40px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-logo{display:flex;align-items:center;gap:8px;}
+.footer-wordmark{font-family:var(--fd);font-size:15px;font-weight:700;color:rgba(255,255,255,.6);}
+.footer-wordmark span{color:var(--amber);}
+.footer-links{display:flex;gap:20px;}
+.footer-link{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;}
+.footer-link:hover{color:rgba(255,255,255,.6);}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.2);}
+
+/* ═══ SCROLL ANIMATIONS ═══ */
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 72 72" fill="none">
+        <line x1="20" y1="12" x2="20" y2="38" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line x1="28" y1="12" x2="28" y2="38" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line x1="36" y1="12" x2="36" y2="38" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line x1="28" y1="38" x2="28" y2="58" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line x1="50" y1="12" x2="50" y2="58" stroke="#C97B2F" stroke-width="3" stroke-linecap="round"/>
+        <path d="M50 12 Q58 20 50 30" fill="#C97B2F"/>
+      </svg>
+    </div>
+    <div class="nav-wordmark">Paired<span>POS</span></div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#how">How it works</a>
+    <a class="nav-link" href="#features">Features</a>
+    <a class="nav-link" href="#pricing">Pricing</a>
+    <a class="nav-link" href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="#contact">Get early access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <span class="hero-eyebrow-dot"></span>
+    Now in early access
+  </div>
+  <h1 class="hero-h1">AI built into every table,<br><em>every ticket, every shift.</em></h1>
+  <p class="hero-sub">PairedPOS is the restaurant operating system for independent operators. Hardware-free, self-serve, and powered by AI from the moment you sign up.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="https://gstharris.github.io/pairedpos-demo/" target="_blank">
+      See the live demo →
+    </a>
+    <a class="btn-secondary" href="#contact">Get early access</a>
+  </div>
+  <div class="hero-proof">
+    <div class="proof-item">✓ No hardware required</div>
+    <div class="proof-dot"></div>
+    <div class="proof-item">✓ Live in 60 minutes</div>
+    <div class="proof-dot"></div>
+    <div class="proof-item">✓ $29/month flat</div>
+    <div class="proof-dot"></div>
+    <div class="proof-item">✓ No contract</div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="roles fade-up">
+  <div class="section-label">Built for everyone in the room</div>
+  <div class="section-title">One system. Three experiences. Zero friction.</div>
+  <div class="role-grid">
+    <div class="role-card guest">
+      <span class="role-emoji">📱</span>
+      <div class="role-who">For guests</div>
+      <div class="role-title">Order from the table</div>
+      <div class="role-desc">Guests scan a QR code, browse the menu, and order — no app download, no waiting for a server. Sous AI answers questions and suggests pairings.</div>
+      <div class="role-features">
+        <div class="role-feat">AI menu guide — dietary, pairings, specials</div>
+        <div class="role-feat">Open tab or pay now</div>
+        <div class="role-feat">Real-time order status</div>
+        <div class="role-feat">Apple Pay, Google Pay, card</div>
+      </div>
+    </div>
+    <div class="role-card server">
+      <span class="role-emoji">🧑‍🍳</span>
+      <div class="role-who">For servers & kitchen</div>
+      <div class="role-title">Every tool in their pocket</div>
+      <div class="role-desc">Staff use their own phones or any tablet. Floor view, order entry, fire courses, comp and void — all in one clean interface built for a busy shift.</div>
+      <div class="role-features">
+        <div class="role-feat">Live floor map with table status</div>
+        <div class="role-feat">One-tap fire, expedite, hold</div>
+        <div class="role-feat">KDS with countdown timers</div>
+        <div class="role-feat">Voice commands on kitchen display</div>
+      </div>
+    </div>
+    <div class="role-card manager">
+      <span class="role-emoji">📊</span>
+      <div class="role-who">For operators & managers</div>
+      <div class="role-title">Run the room from anywhere</div>
+      <div class="role-desc">Sous AI briefs you every morning. Approve comps, track exceptions, see revenue by hour, and manage your menu — all from your phone or laptop.</div>
+      <div class="role-features">
+        <div class="role-feat">Daily AI briefing — no more digging through reports</div>
+        <div class="role-feat">Comp and exception approval flow</div>
+        <div class="role-feat">86 items instantly across all menus</div>
+        <div class="role-feat">EOD closeout and CSV export</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COST COMPARISON -->
+<section class="compare fade-up" id="pricing">
+  <div class="compare-inner">
+    <div class="compare-label">The math</div>
+    <div class="compare-title">$12,600 back in your pocket.</div>
+    <div class="compare-sub">A typical $50K/month restaurant. Same volume. Same service.</div>
+    <div class="compare-grid">
+      <div class="compare-card them">
+        <div class="compare-brand">Toast (typical)</div>
+        <div class="compare-row"><span class="label">Software</span><span class="val">$130/mo</span></div>
+        <div class="compare-row"><span class="label">Processing (locked rate)</span><span class="val">$1,300/mo</span></div>
+        <div class="compare-row"><span class="label">Hardware (amortized)</span><span class="val">$800/mo</span></div>
+        <div class="compare-row"><span class="label">Setup & install</span><span class="val">$500+</span></div>
+        <div class="compare-total">
+          <span class="compare-total-label">Monthly total</span>
+          <span class="compare-total-val">$2,230</span>
+        </div>
+      </div>
+      <div class="compare-card us">
+        <div class="compare-brand">PairedPOS</div>
+        <div class="compare-row"><span class="label">Software</span><span class="val">$29/mo</span></div>
+        <div class="compare-row"><span class="label">Processing (open rate)</span><span class="val">~$1,150/mo</span></div>
+        <div class="compare-row"><span class="label">Hardware</span><span class="val">$0</span></div>
+        <div class="compare-row"><span class="label">Setup</span><span class="val">$0</span></div>
+        <div class="compare-total">
+          <span class="compare-total-label">Monthly total</span>
+          <span class="compare-total-val">~$1,179</span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-savings">
+      <div>
+        <div class="savings-label">Annual savings vs Toast</div>
+        <div class="savings-note">That's a line cook's salary.</div>
+      </div>
+      <div class="savings-val">$12,612 / year</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how fade-up" id="how">
+  <div class="section-label">How it works</div>
+  <div class="section-title">From sign-up to first order in under an hour.</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-title">AI pulls your restaurant data</div>
+      <div class="step-desc">Type your restaurant name. Sous AI finds your Google listing, pulls your hours, address, and website, and pre-fills your profile. Your menu is extracted automatically from your website or an uploaded PDF.</div>
+      <span class="step-time">~10 minutes</span>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-title">Configure tables, staff, and hardware</div>
+      <div class="step-desc">Add your floor plan, seat staff with PINs, and connect any printers. No technician, no site visit. If you have a receipt printer, we support it. If not, skip it.</div>
+      <span class="step-time">~20 minutes</span>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-title">Print QR codes. Start service.</div>
+      <div class="step-desc">Print table QR codes from any printer. Guests scan and order. Kitchen sees tickets instantly. You see everything from your phone. That's it.</div>
+      <span class="step-time">~5 minutes</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features fade-up" id="features">
+  <div class="features-inner">
+    <div class="section-label">What's included</div>
+    <div class="section-title">Everything a modern restaurant needs.</div>
+    <div class="feat-grid">
+      <div class="feat-item">
+        <div class="feat-icon" style="background:var(--forest-l);">🤖</div>
+        <div class="feat-title">Sous AI — your operations layer</div>
+        <div class="feat-desc">Ask Sous to 86 an item, approve a comp, create a special, or pull last night's summary. It runs across every role — guest, server, and manager.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:var(--amber-l);">📱</div>
+        <div class="feat-title">QR ordering — no app required</div>
+        <div class="feat-desc">Guests scan, browse, and order from any phone. Tab management, card holds, and payment — all built in. No app download, no account creation.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:var(--forest-l);">🍳</div>
+        <div class="feat-title">Kitchen display with timers</div>
+        <div class="feat-desc">Tickets with prep time countdowns that turn amber then red. Bump, expedite, and 86 from any tablet. Voice commands built in.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:var(--amber-l);">💳</div>
+        <div class="feat-title">Payments via Stripe</div>
+        <div class="feat-desc">Open payment processor — bring your own Stripe account and keep your rates. Apple Pay, Google Pay, tap, and card. No hardware lock-in.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:var(--forest-l);">📊</div>
+        <div class="feat-title">EOD reports & exceptions</div>
+        <div class="feat-desc">End of day closeout with item mix, tips, comps, and voids. CSV export for QuickBooks or your accountant. Comp approval flow with manager sign-off.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:var(--amber-l);">⚙️</div>
+        <div class="feat-title">Feature flags per restaurant</div>
+        <div class="feat-desc">Turn off special requests for high-volume operations. Disable AI ordering if you prefer. Toggle dietary badges, review snippets, and more — via settings or by asking Sous.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO CTA -->
+<section class="demo-cta fade-up">
+  <div class="demo-cta-inner">
+    <div class="demo-box">
+      <div class="demo-box-title">See it running on a real restaurant.</div>
+      <div class="demo-box-sub">Decker Commissary — Farm to Table. Walk through every role: guest, server, kitchen, and manager.</div>
+      <div class="demo-actions">
+        <a class="btn-demo" href="https://gstharris.github.io/pairedpos-demo/" target="_blank">Open interactive demo →</a>
+        <a class="btn-demo-outline" href="#contact">Schedule a walkthrough</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD GEN -->
+<section class="lead fade-up" id="contact">
+  <div class="lead-inner">
+    <div class="lead-title">Get early access.</div>
+    <div class="lead-sub">We're onboarding our first restaurants now. Tell us about your place and we'll be in touch within 24 hours.</div>
+    <form class="form" id="lead-form">
+      <div class="form-row">
+        <div class="field">
+          <label>Your name</label>
+          <input type="text" name="name" placeholder="Graham Harris" required/>
+        </div>
+        <div class="field">
+          <label>Restaurant name</label>
+          <input type="text" name="restaurant" placeholder="Decker Commissary" required/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="graham@restaurant.com" required/>
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="(805) 555-0100"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Current POS (optional)</label>
+        <input type="text" name="message" placeholder="Toast, Square, paper tickets…"/>
+      </div>
+      <button class="form-submit" type="submit" id="form-btn">Get early access →</button>
+    </form>
+    <div class="form-success" id="form-success">
+      <div class="form-success-icon">✓</div>
+      <div class="form-success-title">You're on the list.</div>
+      <div class="form-success-sub">We'll reach out within 24 hours. In the meantime, explore the interactive demo.</div>
+    </div>
+    <p style="font-size:12px;color:var(--ink3);margin-top:16px;text-align:center;">No spam. No sales calls unless you want them. Just a real conversation.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div style="width:26px;height:26px;border-radius:5px;background:var(--forest);display:flex;align-items:center;justify-content:center;">
+      <svg width="14" height="14" viewBox="0 0 72 72" fill="none">
+        <line x1="20" y1="12" x2="20" y2="38" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="28" y1="12" x2="28" y2="38" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="36" y1="12" x2="36" y2="38" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="28" y1="38" x2="28" y2="58" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="50" y1="12" x2="50" y2="58" stroke="#C97B2F" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M50 12 Q58 20 50 30" fill="#C97B2F"/>
+      </svg>
+    </div>
+    <div class="footer-wordmark">Paired<span>POS</span></div>
+  </div>
+  <div class="footer-links">
+    <a class="footer-link" href="https://gstharris.github.io/pairedpos-demo/" target="_blank">Demo</a>
+    <a class="footer-link" href="#contact">Contact</a>
+    <a class="footer-link" href="mailto:pairedrightpos@gmail.com">pairedrightpos@gmail.com</a>
+  </div>
+  <div class="footer-copy">© 2026 PairedRight, Inc.</div>
+</footer>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Lead gen form
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzcuL8-UUzuLTg_1wTTBP_DV7Lqar0T3998pZkHGVPYhfsZbk_cgExw0GtEDz2GdSWJ/exec';
+
+document.getElementById('lead-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('form-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  const data = {
+    name: e.target.name.value,
+    restaurant: e.target.restaurant.value,
+    email: e.target.email.value,
+    phone: e.target.phone.value,
+    message: e.target.message.value,
+  };
+
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    document.getElementById('lead-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  } catch (err) {
+    btn.textContent = 'Try again';
+    btn.disabled = false;
+    alert('Something went wrong — please email us directly at pairedrightpos@gmail.com');
+  }
+});
+</script>
+</body>
+</html>
